@@ -4,6 +4,24 @@ from operations import add, sub, mult, div
 
 app = Flask(__name__)
 
+OPERATIONS = {
+    'add': add, 
+    'sub': sub, 
+    'mult': mult, 
+    'div': div
+    }
+
+
+@app.route('/math/<operation>')
+def do_math(operation):
+    a = int(request.args.get('a'))
+    b = int(request.args.get('b'))
+    result = OPERATIONS[operation](a, b)
+    
+    return str(result)
+
+
+
 @app.route('/add')
 def do_add():
     a = int(request.args.get('a'))
